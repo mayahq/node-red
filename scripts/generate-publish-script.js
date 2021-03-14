@@ -1,5 +1,9 @@
 #!/usr/bin/env node
 
+/**
+ * This file is modified by mayahq team for internal devops
+ */
+
 const path = require("path");
 const fs = require("fs-extra");
 const should = require("should");
@@ -7,13 +11,13 @@ const should = require("should");
 function generateScript() {
     return new Promise((resolve, reject) => {
         const packages = [
-            "@mayahq/node-red-util",
-            "@mayahq/node-red-runtime",
-            "@mayahq/node-red-registry",
-            "@mayahq/node-red-nodes",
-            "@mayahq/node-red-editor-client",
-            "@mayahq/node-red-editor-api",
-            "@mayahq/node-red"
+            "@node-red/util",
+            "@node-red/runtime",
+            "@node-red/registry",
+            "@node-red/nodes",
+            "@node-red/editor-client",
+            "@node-red/editor-api",
+            "node-red"
         ];
         const rootPackage = require(path.join(__dirname,"..","package.json"));
         const version = rootPackage.version;
@@ -23,7 +27,7 @@ function generateScript() {
         const lines = [];
 
         packages.forEach(name => {
-            lines.push(`npm publish ${name}-${version}.tgz ${tagArg}\n`);
+            lines.push(`npm publish packages/node_modules/${name} --access public\n`);
         })
         resolve(lines.join(""))
     });
